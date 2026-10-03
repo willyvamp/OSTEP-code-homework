@@ -79,3 +79,15 @@ If we close stdout file descriptor we can't be able to write something on the sc
 ## Question 8
 
 ### Write a program that creates two children, and connects the standard output of one to the standard input of the other, using the pipe() system call.
+
+First, create a pipe using the `pipe()` system call. If `pipe()` fails, terminate the program and report the error.
+
+Next, use `fork()` to create the first child process. This child executes the `ls` command. Before executing `ls`, it closes the read end of the pipe and uses `dup2()` to duplicate the pipe's write-end file descriptor onto `STDOUT_FILENO`. As a result, the standard output of `ls` is connected to the write end of the pipe. Therefore, when `ls` writes to standard output, its output is written into the pipe instead of directly to the terminal.
+
+The parent process then uses `fork()` again to create the second child process. This child executes the `wc -l` command. Before executing `wc`, it closes the write end of the pipe and uses `dup2()` to duplicate the pipe's read-end file descriptor onto `STDIN_FILENO`. As a result, the standard input of `wc -l` is connected to the read end of the pipe. Therefore, `wc -l` reads the output produced by `ls` from the pipe.
+
+This creates the equivalent of the shell pipeline:
+
+`ls | wc -l`
+
+The pipe therefore connects the standard output of the first child to the standard input of the second child. Internally, the pipe is a kernel-managed, finite (bounded) buffer that temporarily holds data written by the first process until the second process reads it.
