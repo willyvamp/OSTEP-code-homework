@@ -22,10 +22,12 @@ int main(int argc, char *argv[])
   }
 
   int memory_in_bytes = memorysize * MB;
+  pid_t my_pid = getpid();
 
   // type casting to byte from int to avoid Segmentation fault
   byte *allocmem = (byte*) malloc(memory_in_bytes);
 
+  printf("Malloc PID: %d\n", my_pid);
   printf("Allocated %d bytes of memory\n", memory_in_bytes);
 
   int i;
