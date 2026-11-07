@@ -49,9 +49,11 @@ Allocated 104857600 bytes of memory
 
 **Output of program after using *pmap -X 721532* command**
 
+'''lang-sh
 ❯ pmap -X 721532
     562e915d8000 rw-p 00000000  00:00        0    132      4      4         4          4         4   0        0              0             0              0               0    0       0      0           0 [heap]
     7fde70bff000 rw-p 00000000  00:00        0 102404 102404 102404    102404     102404    102404   0        0              0             0              0               0    0       0      0           1 
+'''
 
 The [heap] mapping is only 132 KB even though 100 MB is allocated by memory-user program, because:
 
