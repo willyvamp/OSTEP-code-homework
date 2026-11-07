@@ -1,33 +1,21 @@
-# Chapter 13
-
-## Question 2
-
-### Now, run free, perhaps using some of the arguments that might be useful (e.g., -m, to display memory totals in megabytes). How much memory is in your system? How much is free? Do these numbers match your intuition?
-
-My Arch Linux machine:
+# Chapter 13  
+## Question 2  
+### Now, run free, perhaps using some of the arguments that might be useful (e.g., -m, to display memory totals in megabytes). How much memory is in your system? How much is free? Do these numbers match your intuition?  
+My Arch Linux machine:  
                total        used        free      shared  buff/cache   available
 Mem:            7783        4338         880        1337        3577        3445
 Swap:           4095         819        3276
 
-Estimated memory available for new applications is shown in *available*
-
-## Question 3
-
-### Next, create a little program that uses a certain amount of memory, called memory-user.c. This program should take one command line argument: the number of megabytes of memory it will use. When run, it should allocate an array, and constantly stream through the array, touching each entry. The program should do this indefinitely, or, perhaps, for a certain amount of time also specified at the command line.
-
-Normally, malloc() allocates memory from the heap, and adjusts the size of the heap as required, using sbrk(2). When allocating blocks of memory larger than MMAP_THRESHOLD bytes, the glibc malloc() implementation allocates the memory as a private  anonymous  mapping  using mmap(2). MMAP_THRESHOLD is 128 kB by default, but is adjustable using mallopt(3).
-
-*malloc()* alone does not necessarily cause physical memory to be allocated immediately. By accessing every byte, your program forces the OS to handle the corresponding virtual memory pages. This is an example of **demand paging**.
-
-## Question 4
-
-### Now, while running your memory-user program, also (in a different terminal window, but on the same machine) run the free tool. How do the memory usage totals change when your program is running? How about when you kill the memory-user program? Do the numbers match your expectations? Try this for different amounts of memory usage. What happens when you use really large amounts of memory?
-
-*watch -n 1 free -h*
-this command show the memory usage updates every 1 second. 
-
-The *available* memory is decreased an amount same as the input from command line after the program is executed and reset the previous value right after the program is killed.
-
+Estimated memory available for new applications is shown in *available*  
+## Question 3  
+### Next, create a little program that uses a certain amount of memory, called memory-user.c. This program should take one command line argument: the number of megabytes of memory it will use. When run, it should allocate an array, and constantly stream through the array, touching each entry. The program should do this indefinitely, or, perhaps, for a certain amount of time also specified at the command line.  
+Normally, malloc() allocates memory from the heap, and adjusts the size of the heap as required, using sbrk(2). When allocating blocks of memory larger than MMAP_THRESHOLD bytes, the glibc malloc() implementation allocates the memory as a private  anonymous  mapping  using mmap(2). MMAP_THRESHOLD is 128 kB by default, but is adjustable using mallopt(3).  
+*malloc()* alone does not necessarily cause physical memory to be allocated immediately. By accessing every byte, your program forces the OS to handle the corresponding virtual memory pages. This is an example of **demand paging**.  
+## Question 4  
+### Now, while running your memory-user program, also (in a different terminal window, but on the same machine) run the free tool. How do the memory usage totals change when your program is running? How about when you kill the memory-user program? Do the numbers match your expectations? Try this for different amounts of memory usage. What happens when you use really large amounts of memory?  
+*watch -n 1 free -h*  
+this command show the memory usage updates every 1 second.  
+The *available* memory is decreased an amount same as the input from command line after the program is executed and reset the previous value right after the program is killed.  
 ## Question 5
 ### Let’s try one more tool, known as pmap. Spend some time, and read the pmap manual page in detail.
 
