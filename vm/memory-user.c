@@ -36,5 +36,7 @@ int main(int argc, char *argv[])
     for(i = 0; i < memory_in_bytes; i++)
       allocmem[i] += 1; 
 
+  free(allocmem);
+
   return EXIT_SUCCESS;
 }
